@@ -184,11 +184,14 @@ const collectOptions = (
   const attestation = $('#conveyance').value;
   const residentKey = $('#resident-key').value;
   const userVerification = $('#user-verification').value;
-  const uvm = $('#switch-uvm').checked || undefined;
   const credProps = $('#switch-cred-props').checked || undefined;
-  const devicePubKey = $('#switch-device-pub-key').checked || undefined;
+  const dpk = $('#switch-device-pub-key').checked || undefined;
   const customTimeout = parseInt($('#custom-timeout').value);
   // const abortTimeout = parseInt($('#abort-timeout').value);
+
+  // Device Public Key extension
+  // const devicePubKey = dpk ? { attestation } : undefined;
+  const devicePubKey = dpk;
 
   // This is registration
   if (mode === 'registration') {
@@ -202,7 +205,7 @@ const collectOptions = (
         userVerification,
         residentKey
       },
-      extensions: { uvm, credProps, devicePubKey },
+      extensions: { credProps, devicePubKey },
       customTimeout,
       user,
       // abortTimeout,
@@ -211,7 +214,7 @@ const collectOptions = (
   // This is authentication
   } else {
     return {
-      extensions: { uvm, devicePubKey },
+      extensions: { devicePubKey },
       customTimeout,
       // abortTimeout,
     } as WebAuthnAuthenticationObject
